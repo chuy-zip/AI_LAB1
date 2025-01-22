@@ -1,2 +1,4 @@
-# AI_LAB1
-AI Lab 1. 
+# Laboratorio 1 de Inteligencia Artificial
+Autores:
+- Nelson García
+- Ricardo Chuy
