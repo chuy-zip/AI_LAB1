@@ -72,7 +72,9 @@ accuracy_test = np.mean(predictions_test == Y_test)
 print(f"Precisión del modelo en el conjunto de prueba: {accuracy_test:.2f}")
 
 # graficar
-plt.scatter(X_test[:, 0], X_test[:, 1], c=Y_test)
+colors = ['green' if label == 0 else 'red' for label in Y_test]
+plt.scatter(X_test[:, 0], X_test[:, 1], c=colors, label='Puntos clasificados')
+
 plt.xlabel('length_url')
 plt.ylabel('length_hostname')
 plt.title('Clasificación de phishing (conjunto de prueba propio)')
@@ -80,7 +82,8 @@ plt.title('Clasificación de phishing (conjunto de prueba propio)')
 # linea de frontera
 x_values = np.array([np.min(X_test[:, 0]), np.max(X_test[:, 0])])
 y_values = -(W[0] * x_values + b) / W[1]
-plt.plot(x_values, y_values, 'r', label='Frontera de decisión')
-plt.legend()
+plt.plot(x_values, y_values, 'blue', label='Frontera de decisión')
+
+plt.legend(["Frontera de decisión", "Puntos clasificados"])
 
 plt.show()
