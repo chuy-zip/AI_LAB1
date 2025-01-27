@@ -51,11 +51,23 @@ plt.show()
 print("Informe de clasificación:\n", classification_report(y_test, y_pred))
 
 # Visualización de la frontera de decisión
+# Visualización de la frontera de decisión con etiquetas claras
 plt.figure(figsize=(10, 6))
-plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap='viridis', label="Datos reales")
+
+# Puntos legítimos
+legit_points = (y_test == 0)  # Etiqueta 0: legítimo
+plt.scatter(X_test[legit_points, 0], X_test[legit_points, 1], 
+            c='yellow', label="Legítimos (Reales)", alpha=0.7)
+
+# Puntos phishing
+phish_points = (y_test == 1)  # Etiqueta 1: phishing
+plt.scatter(X_test[phish_points, 0], X_test[phish_points, 1], 
+            c='purple', label="Phishing (Reales)", alpha=0.7)
+
+# Etiquetas y visualización
 plt.xlabel('length_url')
 plt.ylabel('length_hostname')
-plt.title('Clasificación de phishing (Regresión logística scikit)')
+plt.title('Clasificación de phishing (Regresión logística)')
 
 # Calcular la frontera de decisión
 x_values = np.linspace(X_test[:, 0].min(), X_test[:, 0].max(), 100)

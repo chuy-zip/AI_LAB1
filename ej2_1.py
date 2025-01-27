@@ -18,6 +18,9 @@ def normalize(X):
 df_train = pd.read_csv("train.csv")
 df_test = pd.read_csv("test.csv")
 
+print(df_train.columns)
+print(df_train.dtypes)
+
 # Convertir valores de 'status' a valores binarios
 df_train['status'] = df_train['status'].map({'legitimate': 0, 'phishing': 1})
 df_test['status'] = df_test['status'].map({'legitimate': 0, 'phishing': 1})
@@ -72,15 +75,30 @@ accuracy_test = np.mean(predictions_test == Y_test)
 print(f"Precisión del modelo en el conjunto de prueba: {accuracy_test:.2f}")
 
 # graficar
-plt.scatter(X_test[:, 0], X_test[:, 1], c=Y_test)
+plt.figure(figsize=(10, 6))
+
+# Puntos legítimos
+plt.scatter(
+    X_test[Y_test == 0][:, 0], X_test[Y_test == 0][:, 1], 
+    color='yellow', label='Legítimo', alpha=0.7
+)
+
+# Puntos phishing
+plt.scatter(
+    X_test[Y_test == 1][:, 0], X_test[Y_test == 1][:, 1], 
+    color='purple', label='Phishing', alpha=0.7
+)
+
+# Configuración de la gráfica
 plt.xlabel('length_url')
 plt.ylabel('length_hostname')
 plt.title('Clasificación de phishing (conjunto de prueba propio)')
 
-# linea de frontera
+# Línea de la frontera de decisión
 x_values = np.array([np.min(X_test[:, 0]), np.max(X_test[:, 0])])
 y_values = -(W[0] * x_values + b) / W[1]
 plt.plot(x_values, y_values, 'r', label='Frontera de decisión')
-plt.legend(["no1", "no2"])
 
+# Agregar leyenda
+plt.legend()
 plt.show()
