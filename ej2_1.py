@@ -4,6 +4,13 @@
 # por lo que esta version esta simplificada pero siempre se cumplen con los conceptos escenciales
 # para una regresion logistica
 
+#Conideraciones extas: fue un poco complejo realizar la implementación desde cero y tuvimos que tener cuidad bastante con el 
+#balanceo de los datos, además de eso fue necesario implementar también normalización de datos, ya que el rango/valor de las 
+#columnas variaba significativamente. 
+#Elegimos 2 variables para poder realizar el gráfico como fue solicitado y tuvimos que hacer pruebas condistintas combinaciones 
+# de valores para encontrar cuales eran relevantes para el modelo. Puede que sea necesario profundizar un poco más en las
+# variables seleccionadas y encontrar algunas que sean incluso mejores para el entrenamiento del modelo con regresión logistica. 
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -89,7 +96,7 @@ plt.scatter(
     color='purple', label='Phishing', alpha=0.7
 )
 
-# Configuración de la gráfica
+# conf de la grafica
 plt.xlabel('length_url')
 plt.ylabel('length_hostname')
 plt.title('Clasificación de phishing (conjunto de prueba propio)')
@@ -99,6 +106,5 @@ x_values = np.array([np.min(X_test[:, 0]), np.max(X_test[:, 0])])
 y_values = -(W[0] * x_values + b) / W[1]
 plt.plot(x_values, y_values, 'r', label='Frontera de decisión')
 
-# Agregar leyenda
 plt.legend()
 plt.show()
