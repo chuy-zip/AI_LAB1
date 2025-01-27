@@ -1,6 +1,6 @@
 # Este código fue realizado con el apoyo de la siguiente explicación
 # https://towardsdatascience.com/logistic-regression-from-scratch-in-python-ec66603592e2
-# La implementación en la guias es un tanto mas compleja e incluye mas calculos
+# La implementación en la guias es un tanto mas compleja e incluye mas calculos (como el loss)
 # por lo que esta version esta simplificada pero siempre se cumplen con los conceptos escenciales
 # para una regresion logistica
 
@@ -15,6 +15,8 @@ def normalize(X):
     return (X - X.mean(axis=0)) / X.std(axis=0)
 
 df_phish = pd.read_csv("dataset_phishing.csv")
+
+print(df_phish["status"].value_counts(), end="\n\n")
                        
 print(df_phish.shape)
 print(df_phish.columns)
