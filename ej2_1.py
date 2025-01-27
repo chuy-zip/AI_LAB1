@@ -11,36 +11,38 @@ import matplotlib.pyplot as plt
 def sigmoid(z):
     return 1.0/(1 + np.exp(-z))
 
+def normalize(X):
+    return (X - X.mean(axis=0)) / X.std(axis=0)
+
 df_phish = pd.read_csv("dataset_phishing.csv")
                        
 print(df_phish.shape)
 print(df_phish.columns)
 #La columna status realmente debería de ser 0 o 1 para identyificar si es legitima o phisihing respectivamente
 
-
+print(df_phish['status'])
 # Convertir valores de 'status' a valores binarios
 df_phish['status'] = df_phish['status'].map({'legitimate': 0, 'phishing': 1})
+
 print(df_phish['status'].unique())  #[0,1]
 print("New phishhhhhhhhhhhhhhhhhh")
 print(df_phish["status"])
 
-#remover las columnas no numericas para probar (tal vez reduzca las columasn luego)
-#df = df_phish.drop(columns=["url"])
-
-df = df_phish[["length_url","https_token"]]
+df = df_phish[["length_url","length_hostname"]]
+print("Analyzing features: \n", df)
 
 print(df.shape)
 
 
-# Ahora que tengo 87 columnas necesito 87 pesos w
 X = df.values
+X = normalize(X)
 Y = df_phish['status'].values
 m = df.shape[0] # la cantidad de registros en el dataframe de padnas
 W = np.zeros(df.shape[1])
 b = 0 # sesgo 0 de momento
 
 # Hiperparámetros
-learning_rate = 0.01  
+learning_rate = 0.2  
 num_iterations = 1000
 
 for iteration in range(num_iterations):
@@ -61,4 +63,23 @@ for iteration in range(num_iterations):
 print("Pesos finales:", W)
 print("Sesgo final:", b)
 
-# Graficar
+# Convertir probabilidades a clases binarias
+predictions = (y_hat >= 0.5).astype(int)
+
+# Calcular accuracy
+accuracy = np.mean(predictions == Y)
+print(f"Precisión del modelo: {accuracy:.2f}")
+
+# Graficar los resultados
+plt.scatter(X[:, 0], X[:, 1], c=Y)
+plt.xlabel('length_url')
+plt.ylabel('length_hostname')
+plt.title('Clasificación de phishing')
+
+# Calcular la línea de decisión (frontera)
+x_values = np.array([np.min(X[:, 0]), np.max(X[:, 0])])
+y_values = -(W[0]*x_values + b)/W[1]
+plt.plot(x_values, y_values, 'r', label='Frontera de decisión')
+plt.legend()
+
+plt.show()
