@@ -22,8 +22,8 @@ def normalize(X):
     return (X - X.mean(axis=0)) / X.std(axis=0)
 
 # Cargar los datos de entrenamiento
-df_train = pd.read_csv("train.csv")
-df_test = pd.read_csv("test.csv")
+df_train = pd.read_csv("Task 2_1/train.csv")
+df_test = pd.read_csv("Task 2_1/test.csv")
 
 print(df_train.columns)
 print(df_train.dtypes)

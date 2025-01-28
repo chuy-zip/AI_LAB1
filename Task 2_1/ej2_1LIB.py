@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Cargar los datos de entrenamiento y prueba
-df_train = pd.read_csv("train.csv")
-df_test = pd.read_csv("test.csv")
+df_train = pd.read_csv("Task 2_1/train.csv")
+df_test = pd.read_csv("Task 2_1/test.csv")
 
 # Convertir 'status' a valores binarios (0: legitimate, 1: phishing)
 df_train['status'] = df_train['status'].map({'legitimate': 0, 'phishing': 1})

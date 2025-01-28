@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("dataset_phishing.csv")
+df = pd.read_csv("Task 2_1/dataset_phishing.csv")
 
 df_legit = df[df["status"] == "legitimate"]
 df_phish = df[df["status"] == "phishing"]
