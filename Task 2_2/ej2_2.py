@@ -78,11 +78,20 @@ print(f"Precisión del modelo: {accuracy:.2f}")
 
 # Visualización de los resultados del conjunto de prueba
 plt.figure(figsize=(10, 6))
-plt.scatter(X_test[:, 0], X_test[:, 1], c=predictions, cmap='coolwarm', marker='o', label='Predicciones', alpha=0.8)
+# Graficar los datos predichos con colores según la clase
+for class_label, color, label_name in zip([0, 1], ['blue', 'red'], ['Legítimos', 'Phishing']):
+    plt.scatter(
+        X_test[predictions == class_label, 0], 
+        X_test[predictions == class_label, 1], 
+        color=color, 
+        label=label_name, 
+        alpha=0.8
+    )
+
 plt.xlabel('Longitud del URL')
 plt.ylabel('Longitud del Hostname')
 plt.title(f'Clasificación de sitios de phishing con KNN (k={k})')
-plt.legend(['Phishing', 'Legítimos'])
+plt.legend()  # Añade la leyenda correctamente configurada
 plt.show()
 
 # Gráfica de la matriz de confusión
